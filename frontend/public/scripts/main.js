@@ -6,6 +6,9 @@ const infoContainer = document.getElementById('pet-info');
 const friendshipBar = document.getElementById('friendship');
 const friendshipValueText = document.getElementById('friendship-value');
 const pokemonImage = document.getElementById('pokemon-image');
+const pokemonNameText = document.getElementById('pokemon-name');
+
+let currentPokemon = null;
 
 const stageToImage = {
   1: '/assets/pichu.png',
@@ -29,6 +32,30 @@ function formatInfoValue(value) {
   return String(value);
 }
 
+function formatLabel(key) {
+  return key
+    .split(/[-_]/)
+    .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+    .join(' ');
+}
+
+function resolvePokemonName(pokemon) {
+  if (!pokemon) {
+    return 'Pokémon';
+  }
+
+  const rawName = pokemon.name;
+  if (rawName !== null && rawName !== undefined) {
+    const stringName = String(rawName).trim();
+    if (stringName) {
+      return stringName;
+    }
+  }
+
+  const stage = Number(pokemon.stage);
+  return stageToName[stage] ?? 'Pokémon';
+}
+
 function clampFriendship(value) {
   const numeric = Number(value);
   if (!Number.isFinite(numeric)) {
@@ -37,25 +64,31 @@ function clampFriendship(value) {
   return Math.min(Math.max(Math.round(numeric), 0), 100);
 }
 
-const infoPriority = ['name', 'species', 'owner', 'last-chatted'];
+const infoPriority = ['name', 'species', 'owner', 'last-chatted', 'context'];
+const excludedInfoKeys = new Set(['friendship', 'stage']);
 
 function renderPokemonInfo(pokemon) {
   if (!infoContainer) return;
 
+  currentPokemon = pokemon;
   infoContainer.innerHTML = '';
 
   const seenKeys = new Set();
   const orderedKeys = [];
 
   infoPriority.forEach((key) => {
-    if (Object.prototype.hasOwnProperty.call(pokemon, key)) {
+    if (
+      !excludedInfoKeys.has(key) &&
+      Object.prototype.hasOwnProperty.call(pokemon, key)
+    ) {
+
       orderedKeys.push(key);
       seenKeys.add(key);
     }
   });
 
   Object.keys(pokemon).forEach((key) => {
-    if (!seenKeys.has(key)) {
+    if (!excludedInfoKeys.has(key) && !seenKeys.has(key)) {
       orderedKeys.push(key);
       seenKeys.add(key);
     }
@@ -70,7 +103,7 @@ function renderPokemonInfo(pokemon) {
 
     const label = document.createElement('span');
     label.className = 'info-label';
-    label.textContent = `${key}:`;
+    label.textContent = `${formatLabel(key)}:`;
 
     const infoValue = document.createElement('span');
     infoValue.className = 'info-value';
@@ -82,16 +115,21 @@ function renderPokemonInfo(pokemon) {
 
   const stage = Number(pokemon.stage);
   const imagePath = stageToImage[stage];
+  const displayName = resolvePokemonName(pokemon);
 
   if (pokemonImage) {
     if (imagePath) {
       pokemonImage.src = imagePath;
-      const stageName = stageToName[stage] ?? 'Pokemon';
-      pokemonImage.alt = `${stageName} illustration`;
+      pokemonImage.alt = `${displayName} illustration`;
+
     } else {
       pokemonImage.removeAttribute('src');
       pokemonImage.alt = 'Pokemon';
     }
+  }
+
+  if (pokemonNameText) {
+    pokemonNameText.textContent = displayName;
   }
 
   if (friendshipBar) {
@@ -132,8 +170,8 @@ form.addEventListener('submit', (e) => {
   e.preventDefault();
   const text = input.value.trim();
   if (!text) return;
-  appendMessage('a', text);
-  appendMessage('b', text);
+  appendMessage('You', text);
+  appendMessage(resolvePokemonName(currentPokemon), text);
   input.value = '';
 });
 
