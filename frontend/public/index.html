@@ -2,11 +2,36 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Poke-Pet</title>
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-
+    <div id="app">
+      <div class="side-panel">
+        <div class="pet-display card"></div>
+        <div class="pet-info card">
+          <div class="info">
+            <p>name:</p>
+            <p>species:</p>
+            <p>gender:</p>
+            <p>owner:</p>
+            <p>last-chatted:</p>
+          </div>
+          <div class="friendship">
+            <label for="friendship">Friendship:</label>
+            <progress id="friendship" value="0" max="100"></progress>
+          </div>
+        </div>
+      </div>
+      <div class="chat-panel card">
+        <div id="chat-log" class="chat-log"></div>
+        <form id="chat-form" class="chat-controls">
+          <input id="chat-input" type="text" placeholder="Value" autocomplete="off" />
+          <button type="submit">✕</button>
+        </form>
+      </div>
+    </div>
     <script type="module" src="scripts/main.js"></script>
   </body>
 </html>
