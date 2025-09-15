@@ -229,8 +229,7 @@ img {
     grid-template-rows: none;
     gap: 20px;
   }
-}
-
+  
 @media (max-width: 680px) {
   #app {
     padding: 20px;

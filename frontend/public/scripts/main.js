@@ -81,6 +81,7 @@ function renderPokemonInfo(pokemon) {
       !excludedInfoKeys.has(key) &&
       Object.prototype.hasOwnProperty.call(pokemon, key)
     ) {
+
       orderedKeys.push(key);
       seenKeys.add(key);
     }
@@ -120,6 +121,7 @@ function renderPokemonInfo(pokemon) {
     if (imagePath) {
       pokemonImage.src = imagePath;
       pokemonImage.alt = `${displayName} illustration`;
+
     } else {
       pokemonImage.removeAttribute('src');
       pokemonImage.alt = 'Pokemon';
