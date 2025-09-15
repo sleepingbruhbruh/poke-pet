@@ -1,7 +1,9 @@
 {
   "name": "Pikachu",
+  "species": "Pikachu",
+  "owner": "Ash Ketchum",
   "stage": 2,
   "friendship": 50,
   "last-chatted": "2025-09-15",
-  "context": null
+  "context": "Met while adventuring through Viridian Forest."
 }

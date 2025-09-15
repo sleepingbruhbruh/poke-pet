@@ -8,9 +8,9 @@ const friendshipValueText = document.getElementById('friendship-value');
 const pokemonImage = document.getElementById('pokemon-image');
 
 const stageToImage = {
-  1: 'assets/pichu.png',
-  2: 'assets/pikachu.png',
-  3: 'assets/raichu.png',
+  1: '/assets/pichu.png',
+  2: '/assets/pikachu.png',
+  3: '/assets/raichu.png',
 };
 
 const stageToName = {
@@ -37,13 +37,34 @@ function clampFriendship(value) {
   return Math.min(Math.max(Math.round(numeric), 0), 100);
 }
 
+const infoPriority = ['name', 'species', 'owner', 'last-chatted'];
+
 function renderPokemonInfo(pokemon) {
   if (!infoContainer) return;
 
   infoContainer.innerHTML = '';
 
-  Object.entries(pokemon).forEach(([key, value]) => {
-    const displayValue = key === 'friendship' ? clampFriendship(value) : value;
+  const seenKeys = new Set();
+  const orderedKeys = [];
+
+  infoPriority.forEach((key) => {
+    if (Object.prototype.hasOwnProperty.call(pokemon, key)) {
+      orderedKeys.push(key);
+      seenKeys.add(key);
+    }
+  });
+
+  Object.keys(pokemon).forEach((key) => {
+    if (!seenKeys.has(key)) {
+      orderedKeys.push(key);
+      seenKeys.add(key);
+    }
+  });
+
+  orderedKeys.forEach((key) => {
+    const rawValue = pokemon[key];
+    const displayValue = key === 'friendship' ? clampFriendship(rawValue) : rawValue;
+
     const row = document.createElement('div');
     row.className = 'info-row';
 
