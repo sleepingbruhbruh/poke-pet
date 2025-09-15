@@ -1,3 +1,101 @@
+body {
+  margin: 0;
+  background: #555;
+  font-family: sans-serif;
+}
+
+#app {
+  height: 100vh;
+  display: flex;
+  padding: 20px;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.card {
+  background: #d3d3d3;
+  border-radius: 15px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  padding: 20px;
+}
+
+.side-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.side-panel .card {
+  flex: 1;
+}
+
+.pet-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.friendship {
+  margin-top: 10px;
+}
+
+.chat-panel {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 50vh;
+  align-self: center;
+}
+
+.chat-log {
+  flex: 1;
+  background: #fff;
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: auto;
+  margin-bottom: 10px;
+  white-space: pre-wrap;
+}
+
+.chat-controls {
+  display: flex;
+  gap: 10px;
+}
+
+.chat-controls input {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+}
+
+.chat-controls button {
+  padding: 8px 12px;
+  border: none;
+  border-radius: 10px;
+  background: #fff;
+  cursor: pointer;
+}
+
+@media (orientation: portrait) {
+  #app {
+    flex-direction: column;
+  }
+  .side-panel {
+    flex-direction: row;
+    height: 25vh;
+  }
+  .side-panel .card {
+    height: 100%;
+  }
+  .chat-panel {
+    width: 100%;
+    height: auto;
+    align-self: stretch;
+    flex: 1;
+  }
+}
 
 body {
   margin: 0;
