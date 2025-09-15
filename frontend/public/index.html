@@ -9,16 +9,15 @@
   <body>
     <div id="app">
       <div class="side-panel">
-        <div class="pet-display card"></div>
+        <div class="pet-display card">
+          <img id="pokemon-image" alt="Pokemon" loading="lazy" />
+        </div>
         <div class="pet-info card">
-          <div class="info">
-            <p>name:</p>
-            <p>species:</p>
-            <p>owner:</p>
-            <p>last-chatted:</p>
-          </div>
+          <div class="info" id="pet-info"></div>
           <div class="friendship">
-            <label for="friendship">Friendship:</label>
+            <label class="friendship-label" for="friendship">
+              Friendship: <span id="friendship-value">0</span>/100
+            </label>
             <progress id="friendship" value="0" max="100"></progress>
           </div>
         </div>
